@@ -1,0 +1,69 @@
+from typing import List
+from dag_idea.dag_idea import Item, LinkedList
+
+
+item_ls = [{
+    'table':'dbo.Table1'
+    ,'query':'SELECT 1 as col'
+},
+{
+    'table':'dbo.Table2'
+    ,'query':'SELECT 2 as new_col FROM dbo.Table1'
+},
+{
+    'table':'dbo.Table3'
+    ,'query':'SELECT col, new_col FROM dbo.Table1 t LEFT JOIN dbo.Table2 tt ON 1=1'
+},
+{
+    'table':'dbo.Table4'
+    ,'query':'SELECT 1 as col'
+}
+]
+
+schemas = ['dbo']
+
+item_strip_ls = {}
+table_name_ls = []
+id = 1
+for item in item_ls:
+    table_name = item['table']
+    for sc in schemas:
+        table_name_ls.append(table_name.lower())
+    item_strip_ls[table_name] = {
+        'id':id
+        ,'query':item['query']
+        ,'query_splice':item['query'].split(sep=' ')
+    }
+    id += 1
+
+for k,v in item_strip_ls.items():
+    dependance = []
+    for i in v['query_splice']:
+        if i.lower() in table_name_ls:
+            dependance.append(i)
+    v['dependance'] = dependance
+
+
+item_dict: dict[str, Item] = {}
+for k,v in item_strip_ls.items():
+    item = Item(
+            dependance=v['dependance']
+            ,query=v['query']
+            ,table_name=k
+            ,id=v['id']
+        )
+    
+    item.print()
+    item_dict[k] = item
+
+
+for k,v in item_dict.items():
+    if v.dependance is not []:
+        for d in v.dependance:
+            item = item_dict.get(d)
+            print(type(item))
+            print(item)
+            item.add_successor(v)
+
+for k,v in item_dict.items():
+    v.print()
