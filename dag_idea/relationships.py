@@ -63,4 +63,9 @@ for k,v in linked_list.items.items():
             item.add_successor(v)
 
 linked_list.set_linked_list_heads()
-print(linked_list.heads)
+for i in linked_list.heads:
+    print(i.table_name)
+    print(f"next tables are")
+    print(i.next)
+    for t in i.next:
+        print(f"--{t.table_name}")

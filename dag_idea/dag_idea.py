@@ -7,16 +7,18 @@ class Item:
         self.next:List[Item] = []
         self.dependance_completed = 0
         self.dependance = dependance
-        self.dependance_cnt = 0
         self.id = id
         self.is_processing = False
+
+    def dependance_count(self) -> int:
+        return len(self.dependance)
 
     def is_head(self):
         True if self.dependance_cnt == 0 else False
 
     def can_run(self) -> bool:
         self.dependance_completed += 1
-        if (self.dependance_completed == self.dependance_cnt) and (self.is_processing == False):
+        if (self.dependance_completed == self.dependance_count()) and (self.is_processing == False):
             self.is_processing = True
             return True
         else:
@@ -24,7 +26,6 @@ class Item:
 
     def add_successor(self, Item):
         self.next.append(Item)
-        self.dependance_cnt += 1
     
     def print(self):
         tables = 'nothing'
@@ -35,7 +36,7 @@ class Item:
         print(
 f"""Object: {self.table_name}
 Query: {self.query}
-Has dependancies on: {self.dependance} with count of {self.dependance_cnt}
+Has dependancies on: {self.dependance} with count of {self.dependance_count()}
 With Id of: {self.id}
 Calls {tables} when done
 Is head is {head}
@@ -53,4 +54,4 @@ class ProcessingList:
         self.items.append(item)
 
     def set_linked_list_heads(self):
-        self.heads = [v for k,v in self.items.items() if v.dependance_cnt == 0]
+        self.heads = [v for k,v in self.items.items() if v.dependance_count() == 0]
