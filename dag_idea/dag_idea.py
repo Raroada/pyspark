@@ -30,12 +30,15 @@ class Item:
         tables = 'nothing'
         if self.next is not []:
             tables = ', '.join([i.table_name for i in self.next])
+
+        head = self.is_head
         print(
 f"""Object: {self.table_name}
 Query: {self.query}
-Has dependancies on: {self.dependance}
+Has dependancies on: {self.dependance} with count of {self.dependance_cnt}
 With Id of: {self.id}
 Calls {tables} when done
+Is head is {head}
 """
         )
 
@@ -50,4 +53,4 @@ class ProcessingList:
         self.items.append(item)
 
     def set_linked_list_heads(self):
-        self.heads = [v for k,v in self.items.items() if v.dependance is []]
+        self.heads = [v for k,v in self.items.items() if v.dependance_cnt == 0]
