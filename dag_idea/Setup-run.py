@@ -21,14 +21,14 @@ item_ls = [{
 ]
 
 def test(obj:Item):
-        print(f"start processing")
-        print(obj.table_name)
-        obj.process()
-        next_ls:List[Item] = obj.get_next() 
-        if next_ls is None:
-            return
-        for n in next_ls:
-            test(n)
+    print(f"start processing")
+    print(obj.table_name)
+    obj.process()
+    next_ls:List[Item] = obj.get_next() 
+    if next_ls is None:
+        return
+    for n in next_ls:
+        test(n)
     
 
 schemas = ['dbo']
