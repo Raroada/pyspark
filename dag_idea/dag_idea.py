@@ -38,16 +38,13 @@ class Item:
                 runable.append(i)
         return runable
 
-    def add_successor(self, Item):
-        self.next.append(Item)
-
     def process(self):
         self.print()
         sleep(5)
     
     def print(self):
         tables = 'nothing'
-        if self.next is not []:
+        if len(self.next) > 0:
             tables = ', '.join([i.table_name for i in self.next])
 
         head = self.is_head
@@ -73,4 +70,7 @@ class ProcessingList:
 
     def set_linked_list_heads(self):
         self.heads = [v for k,v in self.items.items() if v.dependance_count() == 0]
+
+    def add_successor(self, head_item:Item, next_item:Item):
+        head_item.next.append(next_item)
                     

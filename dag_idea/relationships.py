@@ -1,6 +1,5 @@
 from typing import List
 from dag_idea import Item, ProcessingList
-from time import sleep
 
 
 item_ls = [{
@@ -72,7 +71,7 @@ for k,v in linked_list.items.items():
     if v.dependance is not []:
         for d in v.dependance:
             item = linked_list.items.get(d)
-            item.add_successor(v)
+            linked_list.add_successor(head_item=item, next_item=v)
 
 linked_list.set_linked_list_heads()
 for i in linked_list.heads:
