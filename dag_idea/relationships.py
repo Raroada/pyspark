@@ -1,5 +1,6 @@
 from typing import List
 from dag_idea import Item, ProcessingList
+from time import sleep
 
 
 item_ls = [{
@@ -19,6 +20,17 @@ item_ls = [{
     ,'query':'SELECT 1 as col'
 }
 ]
+
+def test(obj:Item):
+        print(f"start processing")
+        print(obj.table_name)
+        obj.process()
+        next_ls:List[Item] = obj.get_next() 
+        if next_ls is None:
+            return
+        for n in next_ls:
+            test(n)
+    
 
 schemas = ['dbo']
 
@@ -64,8 +76,4 @@ for k,v in linked_list.items.items():
 
 linked_list.set_linked_list_heads()
 for i in linked_list.heads:
-    print(i.table_name)
-    print(f"next tables are")
-    print(i.next)
-    for t in i.next:
-        print(f"--{t.table_name}")
+    test(i)
