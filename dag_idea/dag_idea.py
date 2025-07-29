@@ -9,13 +9,18 @@ class Item:
         self.dependance = dependance
         self.dependance_cnt = 0
         self.id = id
+        self.is_processing = False
 
     def is_head(self):
         True if self.dependance_cnt == 0 else False
 
     def can_run(self) -> bool:
         self.dependance_completed += 1
-        True if self.dependance_completed == self.dependance_cnt else False
+        if (self.dependance_completed == self.dependance_cnt) and (self.is_processing == False):
+            self.is_processing = True
+            return True
+        else:
+            return False
 
     def add_successor(self, Item):
         self.next.append(Item)
@@ -34,24 +39,15 @@ Calls {tables} when done
 """
         )
 
-class LinkedList:
+class ProcessingList:
     def __init__(self):
-        self.head:List[Item] = None
+        self.items:dict[str, Item] = {}
+        self.heads:List[Item] = []
 
-    def append(self, data):
-        new_node = Item(data)
-        if not self.head:
-            self.head.append(new_node)
-            return
-        current = self.head
-        while current.next:
-            current = current.next
-        current.next = new_node
+    def append_to_list(self, item:Item):
+        if item.dependance is []:
+            self.head
+        self.items.append(item)
 
-    def display(self):
-        elements = []
-        current = self.head
-        while current:
-            elements.append(current.data)
-            current = current.next
-        print(elements)
+    def set_linked_list_heads(self):
+        self.heads = [v for k,v in self.items.items() if v.dependance is []]

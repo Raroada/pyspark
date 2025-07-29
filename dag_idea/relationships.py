@@ -1,5 +1,5 @@
 from typing import List
-from dag_idea.dag_idea import Item, LinkedList
+from dag_idea import Item, ProcessingList
 
 
 item_ls = [{
@@ -43,8 +43,7 @@ for k,v in item_strip_ls.items():
             dependance.append(i)
     v['dependance'] = dependance
 
-
-item_dict: dict[str, Item] = {}
+linked_list = ProcessingList()
 for k,v in item_strip_ls.items():
     item = Item(
             dependance=v['dependance']
@@ -54,16 +53,14 @@ for k,v in item_strip_ls.items():
         )
     
     item.print()
-    item_dict[k] = item
+    linked_list.items[k] = item
 
 
-for k,v in item_dict.items():
+for k,v in linked_list.items.items():
     if v.dependance is not []:
         for d in v.dependance:
-            item = item_dict.get(d)
-            print(type(item))
-            print(item)
+            item = linked_list.items.get(d)
             item.add_successor(v)
 
-for k,v in item_dict.items():
-    v.print()
+linked_list.set_linked_list_heads()
+print(linked_list.heads)
