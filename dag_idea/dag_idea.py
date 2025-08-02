@@ -73,4 +73,3 @@ class ProcessingList:
 
     def add_successor(self, head_item:Item, next_item:Item):
         head_item.next.append(next_item)
-                    

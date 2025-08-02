@@ -66,6 +66,8 @@ for k,v in item_strip_ls.items():
     item.print()
     linked_list.items[k] = item
 
+del item_strip_ls, table_name_ls
+
 
 for k,v in linked_list.items.items():
     if v.dependance is not []:
